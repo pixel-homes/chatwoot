@@ -62,9 +62,11 @@ export default {
 
   methods: {
     async fetchBranding() {
-      const websiteToken = window.chatwootWebChannel?.websiteToken;
-
+      console.log('Calling fetchBranding');
+      const websiteToken = window?.chatwootWebChannel?.websiteToken;
+      console.log('websiteToken', websiteToken);
       if (!websiteToken) {
+        console.log('No website token found');
         return;
       }
 
@@ -76,11 +78,12 @@ export default {
         );
 
         if (!response.ok) {
+          console.log('Failed to fetch branding', response.statusText);
           return;
         }
 
         const data = await response.json();
-
+        console.log('data', data);
         this.globalConfig = {
           brandName: data.brandName || DEFAULT_BRANDING.brandName,
           logoThumbnail: data.logoUrl || DEFAULT_BRANDING.logoThumbnail,
