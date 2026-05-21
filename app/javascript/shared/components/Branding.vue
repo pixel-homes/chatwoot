@@ -1,7 +1,7 @@
 <script>
 import { useBranding } from 'shared/composables/useBranding';
 
-const WORKER_BRANDING_URL = 'https://widget-footer-resolver.fteam.workers.dev'
+const WORKER_BRANDING_URL = 'https://widget-footer-resolver.fteam.workers.dev';
 
 const DEFAULT_BRANDING = {
   brandName: 'Powered By ReplyCleverly',
@@ -62,11 +62,8 @@ export default {
 
   methods: {
     async fetchBranding() {
-      console.log('Calling fetchBranding');
       const websiteToken = window?.chatwootWebChannel?.websiteToken;
-      console.log('websiteToken', websiteToken);
       if (!websiteToken) {
-        console.log('No website token found');
         return;
       }
 
@@ -78,12 +75,10 @@ export default {
         );
 
         if (!response.ok) {
-          console.log('Failed to fetch branding', response.statusText);
           return;
         }
 
         const data = await response.json();
-        console.log('data', data);
         this.globalConfig = {
           brandName: data.brandName || DEFAULT_BRANDING.brandName,
           logoThumbnail: data.logoUrl || DEFAULT_BRANDING.logoThumbnail,
@@ -100,11 +95,22 @@ export default {
 </script>
 
 <template>
-  <div v-if="globalConfig.brandName && !disableBranding" class="px-0 py-3 flex justify-center">
-    <a :href="brandRedirectURL" rel="noreferrer noopener nofollow" target="_blank"
-      class="branding--link text-n-slate-11 hover:text-n-slate-12 cursor-pointer text-xs inline-flex grayscale-[1] hover:grayscale-0 hover:opacity-100 opacity-90 no-underline justify-center items-center leading-3">
-      <img v-if="globalConfig.logoThumbnail" class="ltr:mr-1 rtl:ml-1 max-w-3 max-h-3" :alt="globalConfig.brandName"
-        :src="globalConfig.logoThumbnail" />
+  <div
+    v-if="globalConfig.brandName && !disableBranding"
+    class="px-0 py-3 flex justify-center"
+  >
+    <a
+      :href="brandRedirectURL"
+      rel="noreferrer noopener nofollow"
+      target="_blank"
+      class="branding--link text-n-slate-11 hover:text-n-slate-12 cursor-pointer text-xs inline-flex grayscale-[1] hover:grayscale-0 hover:opacity-100 opacity-90 no-underline justify-center items-center leading-3"
+    >
+      <img
+        v-if="globalConfig.logoThumbnail"
+        class="ltr:mr-1 rtl:ml-1 max-w-3 max-h-3"
+        :alt="globalConfig.brandName"
+        :src="globalConfig.logoThumbnail"
+      />
       <span>
         {{ globalConfig.brandName }}
       </span>
